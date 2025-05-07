@@ -1,29 +1,23 @@
 #!/bin/bash
+
 set -e
 
-echo "🚀 Setting up dotfiles..."
+CONFIGS=(bash nvim tmux)
 
-DOTFILES="$HOME/.dotfiles"
+for config in "${CONFIGS[@]}"; do
+    echo ""
+    read -rp "Install $config config? [y/N]: " answer
+    case "$answer" in
+        [yY][eE][sS]|[yY])
+            echo "▶ Installing $config..."
+            ./$config/install.sh
+            ;;
+        *)
+            echo "⏩ Skipping $config"
+            ;;
+    esac
+done
 
-# Ensure config directories exist
-mkdir -p "$HOME/.config"
-mkdir -p "$HOME/.config/tmux"
-
-# Symlink tmux config
-ln -sf "$DOTFILES/config/tmux/tmux.conf" "$HOME/.config/tmux/tmux.conf"
-
-# Install TPM if not already installed
-if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
-  echo "📦 Installing TPM..."
-  git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
-else
-  echo "✅ TPM already installed"
-fi
-
-# Future configs (example: Neovim)
-# mkdir -p "$HOME/.config/nvim"
-# ln -sf "$DOTFILES/config/nvim/init.lua" "$HOME/.config/nvim/init.lua"
-
-echo "✅ Dotfiles setup complete!"
-echo "👉 Inside tmux, press:  <prefix> + I  to install plugins."
+echo ""
+echo "✅ All done."
 
