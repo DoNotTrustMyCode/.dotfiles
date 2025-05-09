@@ -16,6 +16,9 @@ cd ./bash/install.sh      # Adds source line to ~/.bashrc
 cd ./nvim/install.sh      # Links Neovim config
 cd ./tmux/install.sh      # Links Tmux config and installs TPM
 
+
+or run ./install.sh for an interactive installation
+
 Each install script:
 
     Skips or errors if a non-symlink exists
